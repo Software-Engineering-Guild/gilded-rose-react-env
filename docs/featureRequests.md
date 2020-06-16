@@ -1,7 +1,13 @@
 Feature Requests
 ---
 
+- You have been hired as software engineer working to add features to a legacy production system.  
+- You will need to maintain existing functionality while adding features and improving maintainability.
+- It is okay to consult Google, documentation, etc to do your job.
+- You are not required to use Typescript.  Leeroy started the conversion, but did not finish before he left.
+
 We have recently signed a supplier of conjured items. This requires an update to our system.  Please read the [Gilded Rose specification first.](./gildedRose.md)
+
 
 ## Discount section support:
 * If the Quality or SellIn Date reaches zero, remove it from the on-sale section, and show it in the discount section.
@@ -19,3 +25,9 @@ for you).
 
 Just for clarification, an item can never have its Quality increase above 50, however "Sulfuras" is a
 legendary item and as such its Quality is 80 and it never alters.
+
+
+### Technical Debt Log
+
+- Our data is currently stored in the React component state.  We need a plan for implementing a more feature-rich 
+datastore so we can add more functionality in the future.
