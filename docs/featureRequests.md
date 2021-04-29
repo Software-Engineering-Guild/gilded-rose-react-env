@@ -11,7 +11,7 @@ We have recently signed a supplier of conjured items. This requires an update to
 
 ## Discount section support:
 * If the Quality or SellIn Date reaches zero, remove it from the on-sale section, and show it in the discount section.
-* Add a numeric count of the On Sale and Discount Items to the tab headers using components from our chose component library.
+* Add a numeric count of the On Sale and Discount Items to the tab headers using components from our chosen component library.
 
 ## Conjured item support:
 
