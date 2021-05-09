@@ -12,3 +12,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.item-count {
+  background: #F3B700;
+  padding: 5px;
+  color: white;
+  margin-left: 5px;
+  border-radius: 25%;
+}
