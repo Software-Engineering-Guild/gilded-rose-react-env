@@ -13,9 +13,9 @@ interface ShopItemTableProps {
 }
 
 function getItemRows(items: Item[]) {
-    return map(items, (item: Item) => {
+    return map(items, (item: Item, key: number) => {
         return (
-            <tr className="item-row">
+            <tr key={key} className="item-row">
                 <td>{item.name}</td>
                 <td>{item.quality}</td>
                 <td>{item.sellIn}</td>

@@ -2,12 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import GildedRose from './GildedRose';
+import { Provider } from "react-redux" ;
+import store from "./data/store"
+
 import * as serviceWorker from './serviceWorker';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GildedRose />
+    <Provider store={store}>
+      <GildedRose />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
