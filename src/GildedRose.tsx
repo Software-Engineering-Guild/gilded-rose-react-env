@@ -12,7 +12,7 @@ import WelcomeMessage from "./components/WelcomeMessage";
 import TabContainer from 'react-bootstrap/TabContainer'
 import Nav from 'react-bootstrap/Nav'
 import { useSelector, useDispatch } from 'react-redux';
-
+import { fetchItems, updateItems } from "./data/reducer/shop"
 interface Props {}
 
 interface State {
@@ -26,11 +26,11 @@ const GildedRose = () => {
     const dispatch = useDispatch()
 
     useEffect(()=>{
-        dispatch({type:"FETCH_ITEMS", payload: null})
+        fetchItems(dispatch)
     },[dispatch])
 
     const updateShowQuality = () => {
-        dispatch({type:"UPDATE_ITEMS", payload: null})
+        updateItems(dispatch)
     }
 
     return (
