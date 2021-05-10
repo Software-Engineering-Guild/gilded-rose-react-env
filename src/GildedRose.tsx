@@ -21,8 +21,8 @@ interface State {
 
 //TODO: add type safety
 const GildedRose = () => {
-    const items = useSelector((state: State) => state.items)//state.items.filter((item)=>item.quality > 0 && item.sellIn > 0) )
-    const discountedItems = useSelector((state: State) => state.items.filter((item)=>item.quality === 0 || item.sellIn === 0))
+    const items = useSelector((state: State) => state.items.filter((item)=>item.quality > 0 && item.sellIn > 0) )
+    const discountedItems = useSelector((state: State) => state.items.filter((item)=>item.quality <= 0 || item.sellIn <= 0))
     const dispatch = useDispatch()
 
     useEffect(()=>{
@@ -53,10 +53,10 @@ const GildedRose = () => {
                         <TabContainer id="custom-tabs" defaultActiveKey="sale">
                                 <Nav variant="tabs">
                                     <Nav.Item>
-                                        <Nav.Link className="tab-title" eventKey="sale">Tab 1 <span className="item-count">{items.length}</span></Nav.Link> 
+                                        <Nav.Link className="tab-title" eventKey="sale">Sale <span className="item-count">{items.length}</span></Nav.Link> 
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="discount">Tab 2 <span className="item-count">{discountedItems.length}</span></Nav.Link>
+                                        <Nav.Link eventKey="discount">Discount <span className="item-count">{discountedItems.length}</span></Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                                 <Tab.Content>
@@ -71,13 +71,13 @@ const GildedRose = () => {
                                             <ShopItemTable items={discountedItems}/>
                                         }
                                         {discountedItems.length === 0 &&
-                                            <div>No discounted items</div>
+                                            <div className="empty">No discounted items</div>
                                         }
                                         </Card>
                                     </Tab.Pane>
                                 </Tab.Content>
                         </TabContainer>
-                        <Button onClick={()=>updateShowQuality()}>Update Quality</Button>
+                        <Button className="btn-update" onClick={()=>updateShowQuality()}>Update Quality</Button>
                     </Col>
                 </Row>
             </Container>
