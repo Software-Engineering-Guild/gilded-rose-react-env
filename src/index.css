@@ -12,3 +12,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.item-count {
+  background: #d1ebf1;
+  padding: 5px;
+  color: black;
+  font-weight: bold;
+  margin-left: 5px;
+  border-radius: 25%;
+}
+
+.btn-update {
+  margin: 5px 0;
+}
+
+.empty {
+  margin: 5px;
+}

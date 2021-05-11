@@ -14,3 +14,5 @@ describe('ShopItemTable', () => {
         expect(header.length).toBe(1)
     });
 });
+
+
