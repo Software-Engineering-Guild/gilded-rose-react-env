@@ -14,9 +14,10 @@ code {
 }
 
 .item-count {
-  background: #F3B700;
+  background: #d1ebf1;
   padding: 5px;
-  color: white;
+  color: black;
+  font-weight: bold;
   margin-left: 5px;
   border-radius: 25%;
 }
