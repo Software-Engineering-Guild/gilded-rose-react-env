@@ -53,7 +53,7 @@ const GildedRose = () => {
                         <TabContainer id="custom-tabs" defaultActiveKey="sale">
                                 <Nav variant="tabs">
                                     <Nav.Item>
-                                        <Nav.Link className="tab-title" eventKey="sale">Sale <span className="item-count">{items.length}</span></Nav.Link> 
+                                        <Nav.Link className="tab-title" eventKey="sale">On Sale<span className="item-count">{items.length}</span></Nav.Link> 
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link eventKey="discount">Discount <span className="item-count">{discountedItems.length}</span></Nav.Link>
