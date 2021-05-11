@@ -1,6 +1,9 @@
 
 export class Item {
-  constructor(name, sellIn, quality){
+  name: string
+  sellIn: number
+  quality: number
+  constructor(name: string, sellIn: number, quality: number){
     this.name = name;
     this.sellIn = sellIn;
     this.quality = quality;
@@ -9,29 +12,30 @@ export class Item {
 
 const maxQuality = 50
 
-let updateOperations = new Map()
+let updateOperations = new Map<string, (quality:number, sellIn:number) => number[]>()
 
-updateOperations.set('Aged Brie', (quality, sellIn) => {
-  if (sellIn <  0) return [quality-2, sellIn-1]
+updateOperations.set('Aged Brie', (quality: number, sellIn: number) => {
   return [Math.min(maxQuality, quality+1), sellIn-1]}
 )
-updateOperations.set('Backstage passes to a TAFKAL80ETC concert', (quality, sellIn)=> {
-  if (sellIn < 0) return [0, sellIn-1]
+updateOperations.set('Backstage passes to a TAFKAL80ETC concert', (quality: number, sellIn: number): number[] => {
+  if (sellIn <= 0) return [0, sellIn-1]
   if (sellIn <= 5) return [Math.min(maxQuality, quality+3), sellIn-1]
   if (sellIn <= 10) return [Math.min(maxQuality, quality+2), sellIn-1]
   if (sellIn > 10) return [Math.min(maxQuality, quality+1), sellIn-1]
+  return [] //never reached
 })
-updateOperations.set('Sulfuras, Hand of Ragnaros', (quality , sellIn)=> [quality, sellIn])
-updateOperations.set('Generic, very boring item', (quality ,sellIn)=> {
-  if (sellIn <  0) return [quality-2, sellIn-1]
-  return [quality-1, sellIn-1]
+updateOperations.set('Sulfuras, Hand of Ragnaros', (quality: number , sellIn: number): number[]=> [quality, sellIn])
+updateOperations.set('Generic, very boring item', (quality: number ,sellIn: number): number[]=> {
+  if (sellIn <=  0) return [Math.max(0, quality-2), sellIn-1]
+  return [Math.max(0, quality-1), sellIn-1]
 })
-updateOperations.set('Conjured Item', (quality, sellIn)=> {
-  if (sellIn <  0) return [quality-4, sellIn-1]
-  return [quality-2, sellIn-1]
+updateOperations.set('Conjured Item', (quality: number, sellIn: number): number[]=> {
+  if (sellIn <=  0) return [Math.max(0, quality-4), sellIn-1]
+  return [Math.max(0, quality-2), sellIn-1]
 })
 
 export class Shop {
+  items: Item[] = []
   constructor(items=[]){
     this.items = items;
   }
@@ -40,12 +44,15 @@ export class Shop {
   }
   updateQuality() {
     return this.items.map((item, key)=>{
-      if (!updateOperations.has(item.name)) {
-        item.quality = Math.max(0, item.quality-1)
-        item.sellIn -= 1
-        return item
+      /*for unknown items decrement quality and sellIn by 1*/
+      let [newQuality, newSellIn] = [item.sellIn>=0 ? item.quality-1 : item.sellIn-2, item.sellIn-1] 
+      if (updateOperations.has(item.name)) {
+        try {
+          [newQuality, newSellIn] = updateOperations.get(item.name)!(item.quality, item.sellIn)
+        } catch(e) {
+          console.error("Error retrieving empty function for ", item.name)
+        }
       }
-      const [newQuality, newSellIn] = updateOperations.get(item.name)(item.quality, item.sellIn)
       item.quality = newQuality
       item.sellIn = newSellIn
       return item
