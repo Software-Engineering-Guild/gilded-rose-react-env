@@ -1,4 +1,4 @@
-import {Item, Shop} from "./gilded_rose";
+import {Item, Shop} from "./gilded_rose.ts";
 
 describe("Gilded Rose", function() {
     it("should foo", function() {
@@ -45,7 +45,7 @@ describe("Gilded Rose", function() {
     it("should update Backstage Passes correctly where sellin is 0", function() {
         const gildedRose = new Shop([ new Item("Backstage passes to a TAFKAL80ETC concert", 0, 8) ]);
         const items = gildedRose.updateQuality();
-        expect(items[0].quality).toEqual(11);
+        expect(items[0].quality).toEqual(0);
         expect(items[0].sellIn).toEqual(-1);
     })
 
@@ -54,6 +54,13 @@ describe("Gilded Rose", function() {
         const items = gildedRose.updateQuality();
         expect(items[0].quality).toEqual(0);
         expect(items[0].sellIn).toEqual(-2);
+    })
+
+    it("should update Backstage Passes correctly where quality is potentially exceeding 50", function() {
+        const gildedRose = new Shop([ new Item("Backstage passes to a TAFKAL80ETC concert", 5, 49) ]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).toEqual(50);
+        expect(items[0].sellIn).toEqual(4);
     })
 
     it("should update Aged Brie correctly where sellin is 10", function() {
@@ -84,24 +91,24 @@ describe("Gilded Rose", function() {
         expect(items[0].sellIn).toEqual(99);
     })
 
-    it("should update Generic, very boring item correctly when quality is 0", function() {
-        const gildedRose = new Shop([ new Item("Generic, very boring item", 100, 0) ]);
+    it("should update Generic, very boring item correctly when sell in has passed", function() {
+        const gildedRose = new Shop([ new Item("Generic, very boring item", -2, 100) ]);
         const items = gildedRose.updateQuality();
-        expect(items[0].quality).toEqual(-1);
-        expect(items[0].sellIn).toEqual(99);
+        expect(items[0].quality).toEqual(98);
+        expect(items[0].sellIn).toEqual(-3);
     })
 
-    it("should update Generic, very boring item correctly when sell in is 0", function() {
-        const gildedRose = new Shop([ new Item("Generic, very boring item", 0, -10) ]);
+    it("should update Generic, very boring item correctly when quality is 1 and sell in is passed", function() {
+        const gildedRose = new Shop([ new Item("Generic, very boring item", -1, 1) ]);
         const items = gildedRose.updateQuality();
-        expect(items[0].quality).toEqual(-11);
-        expect(items[0].sellIn).toEqual(-1);
+        expect(items[0].quality).toEqual(0);
+        expect(items[0].sellIn).toEqual(-2);
     })
 
     it("should update Generic, very boring item correctly when sell in has passed", function() {
-        const gildedRose = new Shop([ new Item("Generic, very boring item", -1, -10) ]);
+        const gildedRose = new Shop([ new Item("Generic, very boring item", -1, 10) ]);
         const items = gildedRose.updateQuality();
-        expect(items[0].quality).toEqual(-12);
+        expect(items[0].quality).toEqual(8);
         expect(items[0].sellIn).toEqual(-2);
     })
 
@@ -115,14 +122,21 @@ describe("Gilded Rose", function() {
     it("should update Conjured Item correctly when sell in is zero", function() {
         const gildedRose = new Shop([ new Item("Conjured Item", 0, 10) ]);
         const items = gildedRose.updateQuality();
-        expect(items[0].quality).toEqual(8);
+        expect(items[0].quality).toEqual(6);
         expect(items[0].sellIn).toEqual(-1);
     })
 
-    it("should update Conjured Item correctly when sell in has passed", function() {
-        const gildedRose = new Shop([ new Item("Conjured Item", -1, -10) ]);
+    it("should update Conjured Item correctly when sell in has passed and quality is 1", function() {
+        const gildedRose = new Shop([ new Item("Conjured Item", -1, 1) ]);
         const items = gildedRose.updateQuality();
-        expect(items[0].quality).toEqual(-14);
+        expect(items[0].quality).toEqual(0);
+        expect(items[0].sellIn).toEqual(-2);
+    })
+
+    it("should update Conjured Item correctly when sell in has passed", function() {
+        const gildedRose = new Shop([ new Item("Conjured Item", -1, 10) ]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).toEqual(6);
         expect(items[0].sellIn).toEqual(-2);
     })
 });
